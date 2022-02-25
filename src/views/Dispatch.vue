@@ -14,7 +14,14 @@
     </v-container>
     <div class="d-flex justify-start ml-4 mt-4">
       <v-btn depressed large color="primary" @click="getOpenDisptaches">
-        List
+        <span class="mr-2">List</span>
+        <v-icon>mdi-format-list-bulleted </v-icon>
+      </v-btn>
+    </div>
+    <div class="d-flex justify-end ml-4 mt-4">
+      <v-btn depressed large color="info" @click="dispacthMe">
+        <span class="mr-2">Dispatch Me</span>
+        <v-icon>mdi-hand-back-right</v-icon>
       </v-btn>
     </div>
 
@@ -24,12 +31,11 @@
         :items="dispatch"
         item-key="id"
         class="elevation-1"
-        :sort-by= "created"
+        :sort-by="created"
         :search="search"
-        :custom-filter="filterOnlyCapsText"        
+        :custom-filter="filterOnlyCapsText"
         show-select
         v-model="selectedRows"
-        
       >
         <template v-slot:top>
           <v-text-field
@@ -40,7 +46,7 @@
         </template>
       </v-data-table>
     </div>
-    {{selectedRows}}
+    {{ selectedRows }} {{ deneme }}
   </div>
 </template>
 
@@ -50,9 +56,10 @@ import axios from "axios";
 export default {
   data() {
     return {
+      clickmisin: true,
       machineName: "KP10",
-      deneme : "portakal",
-      selectedRows :[],
+      deneme: "portakal",
+      selectedRows: [],
 
       machines: [
         "DA02",
@@ -195,7 +202,11 @@ export default {
     },
     getOpenDisptaches() {
       axios
-        .get("http://l2l_backend.test/api/dispatch/" + this.machineName)
+        .get("http://l2l_backend.test/api/dispatch/" + this.machineName, {
+          headers: {
+            Authorization: `Bearer ${"1|KWh4kt7fs3lZ8em6wCOfAg7Rvu64aPKscvAwUJ8S"}`,
+          },
+        })
         .then((response) => {
           this.dispatch = response.data.data;
           //console.log(response.data.data);
@@ -207,9 +218,16 @@ export default {
           alert("Try again :( \n" + error.response.data.message);
         });
     },
+    dispacthMe() {
+      if (this.deneme == "ehehehe") {
+        this.deneme = "portakal";
+      } else {
+        this.deneme = "ehehehe";
+      }
+    },
   },
   beforeMount() {
-    this.getOpenDisptaches()
+    this.getOpenDisptaches();
   },
 };
 </script>
