@@ -3,24 +3,33 @@
     <v-container fluid>
       <v-row align="center">
         <v-col class="d-flex" cols="12" sm="6">
-          <v-select :items="machines" label="Machine Names" dense v-model="machineName"></v-select>
+          <v-select
+            :items="machines"
+            label="Machine Names"
+            dense
+            v-model="machineName"
+          ></v-select>
         </v-col>
       </v-row>
     </v-container>
-     <div class="d-flex justify-start ml-4 mt-4">
+    <div class="d-flex justify-start ml-4 mt-4">
       <v-btn depressed large color="primary" @click="getOpenDisptaches">
         List
       </v-btn>
     </div>
 
-    <div >
+    <div>
       <v-data-table
         :headers="headers"
         :items="dispatch"
-        item-key="name"
+        item-key="id"
         class="elevation-1"
+        :sort-by= "created"
         :search="search"
-        :custom-filter="filterOnlyCapsText"
+        :custom-filter="filterOnlyCapsText"        
+        show-select
+        v-model="selectedRows"
+        
       >
         <template v-slot:top>
           <v-text-field
@@ -31,7 +40,7 @@
         </template>
       </v-data-table>
     </div>
-    
+    {{selectedRows}}
   </div>
 </template>
 
@@ -41,8 +50,118 @@ import axios from "axios";
 export default {
   data() {
     return {
-      machineName : "KP10",
-      machines: ["KP10", "PPMI", "R230-2", "PPMI-2"],
+      machineName: "KP10",
+      deneme : "portakal",
+      selectedRows :[],
+
+      machines: [
+        "DA02",
+        "DA04",
+        "DA07",
+        "DK01",
+        "EP12",
+        "EP13",
+        "EP21",
+        "EP22",
+        "EP23",
+        "EP25",
+        "EP26",
+        "EP29",
+        "Hat1",
+        "Grup2",
+        "Grup3",
+        "Grup4",
+        "Grup6",
+        "H012",
+        "H013",
+        "H014",
+        "H015",
+        "H018",
+        "Grup5",
+        "H700",
+        "H730",
+        "H730-2",
+        "H760",
+        "H760-2",
+        "H790",
+        "H800",
+        "H820",
+        "H830",
+        "H840",
+        "H850",
+        "H860",
+        "HEAT-01",
+        "HK01",
+        "HK03",
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05",
+        "K07",
+        "K08",
+        "K09",
+        "K10",
+        "K14",
+        "K17",
+        "K19",
+        "K22",
+        "K24",
+        "K26",
+        "K27",
+        "K32",
+        "KP01",
+        "KP02",
+        "KP03",
+        "KP04",
+        "KP05",
+        "KP06",
+        "KP07",
+        "KP09",
+        "KP10",
+        "KP11",
+        "KP12",
+        "KP13",
+        "KP14",
+        "KP15",
+        "KP16",
+        "KP17",
+        "MD1-Ütüleme ve Delik Delme",
+        "MK1-Kapak ve Yay Çanak Kaynak",
+        "MK1-1 -Kapak ve Yay Çanak Kaynak",
+        "MK1-2 -Kapak ve Yay Çanak Kaynak",
+        "MK1-3 -Kapak ve Yay Çanak Kaynak",
+        "MK1-4-Kapak ve Yay Çanak Kaynak",
+        "MK2-Stab Braket Kaynak",
+        "MK2-1-Stab Braket Kaynak",
+        "MK2-2-Stab Braket Kaynak",
+        "MP1- Projeksiyon Kaynak",
+        "MS1-Sızdırmazlık Test",
+        "MSG1- Soğutma İstasyonu",
+        "MÇ1-Boru Markalama ve Kapak Çakma",
+        "Ni-Cr Plating",
+        "P230 PPMI",
+        "P230-2",
+        "PC01",
+        "PC02",
+        "PC03",
+        "PC04",
+        "PC05",
+        "PC06",
+        "PC07",
+        "PDB1",
+        "PM01",
+        "PM02",
+        "PM05",
+        "R200.2",
+        "R200.2-1",
+        "R200.2-2",
+        "R230",
+        "R230-2",
+        "R230-3",
+        "RE01",
+        "SERT-KUR1",
+      ],
       search: "",
       dispatch: [],
     };
@@ -61,6 +180,7 @@ export default {
         { text: "Description", value: "description" },
         { text: "Created", value: "created" },
         { text: "Createdby", value: "createdby" },
+        { text: "Action", value: this.deneme },
       ];
     },
   },
@@ -78,7 +198,7 @@ export default {
         .get("http://l2l_backend.test/api/dispatch/" + this.machineName)
         .then((response) => {
           this.dispatch = response.data.data;
-          //console.log(response.data.data);          
+          //console.log(response.data.data);
         })
         .catch((error) => {
           console.error(error);
@@ -87,6 +207,9 @@ export default {
           alert("Try again :( \n" + error.response.data.message);
         });
     },
+  },
+  beforeMount() {
+    this.getOpenDisptaches()
   },
 };
 </script>
