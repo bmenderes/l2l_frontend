@@ -30,8 +30,7 @@
         :headers="headers"
         :items="dispatch"
         item-key="id"
-        class="elevation-1"
-        :sort-by="created"
+        class="elevation-1"      
         :search="search"
         :custom-filter="filterOnlyCapsText"
         show-select
