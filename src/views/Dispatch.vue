@@ -30,7 +30,7 @@
         :headers="headers"
         :items="dispatch"
         item-key="id"
-        class="elevation-1"      
+        class="elevation-1"
         :search="search"
         :custom-filter="filterOnlyCapsText"
         show-select
@@ -203,7 +203,7 @@ export default {
       axios
         .get("http://l2l_backend.test/api/dispatch/" + this.machineName, {
           headers: {
-            Authorization: `Bearer ${"1|KWh4kt7fs3lZ8em6wCOfAg7Rvu64aPKscvAwUJ8S"}`,
+            Authorization: `Bearer ${this.$store.state.userToken}`,
           },
         })
         .then((response) => {

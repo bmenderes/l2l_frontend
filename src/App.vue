@@ -20,6 +20,12 @@
         <span class="mr-2">Dispatch</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn to="Register" class=" ml-10" text>
+        <span class="mr-2">Register</span>
+        <v-icon>mdi-account-plus</v-icon>
+      </v-btn>
+     
     </v-app-bar>
 
     <v-main>
